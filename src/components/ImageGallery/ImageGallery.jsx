@@ -29,7 +29,7 @@ export function ImageGallery({ onClick, page, value }) {
       });
       setStatus('resolved');
     });
-    // eslint-disable-next-line
+    
   }, [value]);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export function ImageGallery({ onClick, page, value }) {
       });
       setStatus('resolved');
     });
-    // eslint-disable-next-line
+    
   }, [page]);
 
   return (
