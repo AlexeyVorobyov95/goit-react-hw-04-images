@@ -14,41 +14,30 @@ export function ImageGallery({ onClick, page, value }) {
     if (value === '') {
       return;
     }
-
-    if (image.length > 0) {
+    if (page === 1) {
       setImage([]);
     }
 
     setStatus('panding');
+
     getApi(value, page).then(image => {
       if (image.hits.length === 0) {
         alert(`No results were found for your request`);
       }
-      setImage(prevImage => {
-        return [...prevImage, ...image.hits];
-      });
-      setStatus('resolved');
-    });
-    
-  }, [value]);
 
-  useEffect(() => {
-    if (page === 1) {
-      return;
-    }
-    setStatus('panding');
-    getApi(value, page).then(image => {
       const totalPages = Math.ceil(image.totalHits / 12);
       if (page > totalPages || page === totalPages) {
+        setStatus('resolved');
         alert(`You reached end of results`);
+        return;
+      } else {
+        setImage(prevState => {
+          return [...prevState, ...image.hits];
+        });
+        setStatus('resolved');
       }
-      setImage(prevImage => {
-        return [...prevImage, ...image.hits];
-      });
-      setStatus('resolved');
     });
-    
-  }, [page]);
+  }, [value, page]);
 
   return (
     <>
